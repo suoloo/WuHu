@@ -2,7 +2,7 @@
 删除/禁用过期COOKIE
 更新时间：2021-8-14
 */
-// */17 * * * * https://raw.githubusercontent.com/suoloo/WuHu/main/check_ck.js
+// */13 * * * * https://raw.githubusercontent.com/suoloo/WuHu/main/check_ck.js
 
 const fs = require("fs");
 const request = require("request");
@@ -132,7 +132,7 @@ function delEnv() {
         }
         request.delete(options, (err, resp, data) => {
             console.log(`❗️删除成功❗️`);
-            message += `【原序号：${$.index} 】  ${$.UserName}\n帐号状态：已失效\n处理方式：❌删除❌\n\n`;
+            message += `原序号：${$.index}   【${$.UserName}】\n帐号状态：已失效\n处理方式：❌删除❌\n\n`;
         })
     })
 }
@@ -150,8 +150,8 @@ function disEnv() {
             body:`["${ckid}"]`
         }
         request.put(options, (err, resp, data) => {
-            console.log(`❗️禁用成功❗️`);
-            message += `【原序号：${$.index} 】  ${$.UserName}\n帐号状态：已失效\n处理方式：⚠️禁用⚠️\n\n`;
+            console.log(`⚠️禁用成功⚠️`);
+            message += `原序号：${$.index}   【${$.UserName}】\n帐号状态：已失效\n处理方式：⚠️禁用⚠️\n\n`;
         })
     })
 }
