@@ -42,7 +42,7 @@ $.shareuuid = "5e81094ee1d640b2996883b48d0c410a"
     if (message.length != 0) {
         if ($.isNode()) {
             await notify.sendNotify("手机城兑换", `${message}`);
-        } 
+        }
     }
 })()
     .catch((e) => $.logErr(e))
@@ -68,7 +68,7 @@ async function qiangquan() {
             try {
                     data=JSON.parse(data)
                     console.log(data.msg);
-                    message += `京东账号${$.index}【${$.nickName || $.UserName}】\n${data.msg}\n`
+                    message += `京东账号${$.index}【${$.nickName || $.UserName}】\n${data.msg}\n\n`
 
             } catch (e) {
                 $.logErr(e, resp)
