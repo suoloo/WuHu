@@ -7,6 +7,7 @@ const $ = new Env('手机城积分兑换');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const randomCount = $.isNode() ? 20 : 5;
 const notify = $.isNode() ? require('./sendNotify') : '';
+const chinaTime = require('china-time');
 const request=require('request');
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [],
@@ -48,6 +49,9 @@ $.shareuuid = "5e81094ee1d640b2996883b48d0c410a"
 })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
+//获取活动信息
+
+// 更新cookie
 
 async function qiangquan() {
     return new Promise(resolve => {
@@ -64,9 +68,11 @@ async function qiangquan() {
         }
         request.post(options, async (err, resp, data, response) => {
             try {
-                    data=JSON.parse(data)
-                    console.log(data.msg);
-                    message += `京东账号${$.index}【${$.nickName || $.UserName}】\n${data.msg}\n\n`
+
+                console.log(chinaTime('HH:mm:ss:sss')); // 2018-02-07 13:08:17
+                data=JSON.parse(data)
+                console.log(data.msg);
+                message += `京东账号${$.index}【${$.nickName || $.UserName}】\n${data.msg}\n\n`
 
             } catch (e) {
                 $.logErr(e, resp)
