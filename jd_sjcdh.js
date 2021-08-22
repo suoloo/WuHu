@@ -49,9 +49,6 @@ $.shareuuid = "5e81094ee1d640b2996883b48d0c410a"
 })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
-//获取活动信息
-
-// 更新cookie
 
 async function qiangquan() {
     return new Promise(resolve => {
@@ -68,7 +65,6 @@ async function qiangquan() {
         }
         request.post(options, async (err, resp, data, response) => {
             try {
-
                 console.log(chinaTime('HH:mm:ss:sss')); // 2018-02-07 13:08:17
                 data=JSON.parse(data)
                 console.log(data.msg);
