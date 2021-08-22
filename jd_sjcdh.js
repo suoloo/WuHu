@@ -1,6 +1,7 @@
 /*
-59 59 23 * * *
+818手机城换1000元券
 */
+// 0 * * * *
 const $ = new Env('手机城积分兑换');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -47,9 +48,6 @@ $.shareuuid = "5e81094ee1d640b2996883b48d0c410a"
 })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
-//获取活动信息
-
-// 更新cookie
 
 async function qiangquan() {
     return new Promise(resolve => {
