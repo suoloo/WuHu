@@ -31,7 +31,7 @@ $.shareuuid = "5e81094ee1d640b2996883b48d0c410a"
         });
         return;
     }
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 3; i++) {
         cookie = cookiesArr[i];
         if (cookie) {
             $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
