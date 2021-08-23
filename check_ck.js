@@ -1,10 +1,10 @@
 /*
 删除/禁用过期COOKIE
 更新时间：2021-8-14
+2.2版本的报错502就是因为号太多了，最直观的表现就是   打开青龙面板---进入 Session管理  COOKIE加载不出来 
 */
 // */13 * * * * https://raw.githubusercontent.com/suoloo/WuHu/main/check_ck.js
 
-const fs = require("fs");
 const request = require("request");
 const $ = new Env('CK检测');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -79,7 +79,7 @@ function GetToken() {
     fs.readFile(path, function (err, data) {
         if (err) {
             console.log(err);
-            console.log(`‼️获取失败,路径错误‼️，默认变量为【export QL_DIR=\\"/ql\\"】#一般不是/ql就是/QL‼️`);
+            console.log(`‼️获取失败,路径错误‼️`);
             return;
         } else {
             let auth = data.toString();
@@ -102,12 +102,11 @@ function Getckdata() {
             try {
                 if (err) {
                     console.log(`${JSON.stringify(err)}`);
-                    console.log(`‼️‼️获取失败‼️‼️`)
+                    console.log(`‼️‼️获取失败‼️‼️，你是不是有100+个号！？`)
                     return
                 } else {
                     //console.log(`获取成功🎉:成功`);
                     ckdataArr = JSON.parse(data);
-                    //console.log(data);
                 }
             } catch (e) {
                 $.logErr(e, resp)
@@ -120,7 +119,6 @@ function Getckdata() {
 
 function delEnv() {
     return new Promise(resolve => {
-        const request = require("request");
         const options = {
             url: `http://127.0.0.1:5600/api/${QL_env}`,
             headers: {
@@ -139,7 +137,6 @@ function delEnv() {
 
 function disEnv() {
     return new Promise(resolve => {
-        const request = require("request");
         const options = {
             url: `http://127.0.0.1:5600/api/${QL_env}/disable`,
             headers: {
@@ -182,13 +179,9 @@ async function TotalBean() {
                         if (data['retcode'] === "1001") {
                             console.log(`\n*****检测序号【${$.index}】【${$.nickName || $.UserName}】*****\n`);
                             console.log(`❗️失效账号❗️`);
-                            //console.log(`❗️禁用成功❗️`);
                             if (Check_ck == "Del") {
                                 delEnv();
-                                //await notify.sendNotify(`${$.name}`, `原序号${$.index} ${$.UserName}\n‼️‼️已过期删除‼️‼️`);
                             } else {
-
-                                //await  notify.sendNotify(`${$.name}`, `原序号${$.index} ${$.UserName}\n‼️‼️已过期禁用‼️‼️`);
                                 disEnv();
                             }
                         }
