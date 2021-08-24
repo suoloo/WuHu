@@ -232,11 +232,7 @@ function getJxNc(){
                             data = JSON.parse(data);
                             if (data["ret"] === 0) {
                                 if (data.active) {
-                                    let shareCodeJson = {
-                                        'smp': data.smp,
-                                        'active': data.active,
-                                        'joinnum': data.joinnum,
-                                    };
+                                    let shareCodeJson = {"smp": data.smp, "active": data.active, "joinnum": data.joinnum,};
                                     console.log(`注意：京喜农场 种植种子发生变化的时候，互助码也会变！！`);
                                     //console.log(`【京东账号${$.index}（${$.UserName}）京喜农场】` + JSON.stringify(shareCodeJson));
                                     zl_jxnc +=`${JSON.stringify(shareCodeJson)}@`
