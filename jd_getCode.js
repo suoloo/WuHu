@@ -72,15 +72,22 @@ let list ="";
     list += `export zl_jdmc="${zl_jdmc}"\n`
     list += `export zl_zddd="${zl_zddd}"\n`
     list += `export zl_jxgc="${zl_jxgc}"\n`
-    list += `export zl_jxnc="${zl_jxnc}"\n`
     list += `export zl_sgmh="${zl_sgmh}"\n`
     //list += `export zl_cfd="${zl_cfd}"\n`
     list += `export zl_qdlxj="${zl_qdlxj}"\n`
+    zl_jxnc += `${zl_jxnc}`
     fs.writeFile('../config/task_before.sh', `${list}`, function (error) {
         if (error) {
             console.log('写入失败')
         } else {
             console.log('活动助力码已写入task_before.sh')
+        }
+    })
+    fs.writeFile('../config/zl_jxnc.sh', `${zl_jxnc}`, function (error) {
+        if (error) {
+            console.log('写入失败')
+        } else {
+            console.log('京喜农场助力码已写入zl_jxnc.sh')
         }
     })
 })()
