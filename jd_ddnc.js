@@ -1295,7 +1295,7 @@ function shareCodesFormat() {
             $.get(options, (err, resp, data) => { // 初始化内置变量
                 if (!err) {
                     shareCode = data;
-                    console.log(shareCode)
+                    //console.log(shareCode)
                 }
             });
         } catch (e) {
@@ -1327,7 +1327,7 @@ function requireConfig() {
         notify = $.isNode() ? require('./sendNotify') : '';
         //Node.js用户请在jdCookie.js处填写京东ck;
         const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-        const jdFruitShareCodes = $.isNode() ? require('./jdFruitShareCodes.js') : '';
+        const jdFruitShareCodes = '';
         //IOS等用户直接用NobyDa的jd cookie
         if ($.isNode()) {
             Object.keys(jdCookieNode).forEach((item) => {
