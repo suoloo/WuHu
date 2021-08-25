@@ -5,7 +5,8 @@
 
 需配合获取助力码脚本使用【https://raw.githubusercontent.com/suoloo/WuHu/main/jd_getCode.js】
 
-优先 内部账号助力，多余的助力作者
+助力逻辑：账号一助力作者，剩下的按顺序内部助力
+介意勿用
 
 无需京喜token,只需京东cookie即可.
 
@@ -48,6 +49,7 @@ const openUrl = `openjd://virtual?params=${encodeURIComponent('{ "category": "ju
 let subTitle = '', message = '', option = {'open-url': openUrl}; // 消息副标题，消息正文，消息扩展参数
 const JXNC_API_HOST = 'https://wq.jd.com/';
 let allMessage = '';
+let zlm= "";
 $.detail = []; // 今日明细列表
 $.helpTask = null;
 $.allTask = []; // 任务列表
@@ -70,6 +72,7 @@ $.helpNum = 0; // 当前账号 随机助力次数
 let assistUserShareCode = 0; // 随机助力用户 share code
 
 !(async () => {
+    await getcode();
     await requireConfig();
     if (!cookieArr[0]) {
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -78,7 +81,7 @@ let assistUserShareCode = 0; // 随机助力用户 share code
     $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;
     await requestAlgo();
     for (let i = 0; i < cookieArr.length; i++) {
-        jxncShareCodeArr=process.env.zl_jxnc;
+        jxncShareCodeArr=zlm;
         if (cookieArr[i]) {
             currentCookie = cookieArr[i];
             $.UserName = decodeURIComponent(currentCookie.match(/pt_pin=([^; ]+)(?=;?)/) && currentCookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
@@ -197,7 +200,7 @@ function requireConfig() {
 
         try {
             let options = {
-                "url": `https://cdn.jsdelivr.net/gh/suoloo/Code@master/shareCode/jxnc.json`,
+                "url": `https://cdn.jsdelivr.net/gh/suoloo/Code@master/shareCode/jxnc.txt`,
                 "headers": {
                     "Accept": "application/json,text/plain, */*",
                     "Content-Type": "application/x-www-form-urlencoded",
@@ -263,6 +266,15 @@ function TotalBean() {
     })
 }
 
+async function getcode(){
+    fs.readFile('../config/zl_jxnc.sh', function (error, data) {
+        if (error) {
+            console.log('助力码读取失败')
+        } else {
+            zlm =data.toString();
+        }
+    })
+}
 // 处理当前账号token
 function tokenFormat() {
     return new Promise(async resolve => {
@@ -283,7 +295,11 @@ function shareCodesFormat() {
             currentShareCode = jxncShareCodeArr.split('@');
             currentShareCode.push(...(shareCode.split('@')));
         } else {
-            $.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码`)
+            if (i=1){
+                $.log("账号一助力作者，后续账号按序号内部助力\n")
+            }else{
+                $.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码`)
+            }
             currentShareCode = shareCode.split('@');
         }
         $.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(currentShareCode)}`)
