@@ -34,7 +34,7 @@ let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify, n
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
 let shareCodes = [ // 这个列表填入你要助力的好友的shareCode
-''
+    ''
 ]
 let shareCode = '';
 let message = '', subTitle = '', option = {}, isFruitFinished = false;
@@ -1307,6 +1307,7 @@ function shareCodesFormat() {
         if (process.env.zl_ddnc){
             newShareCodes=process.env.zl_ddnc.split('@');
             newShareCodes.push(...(shareCode.split('@')));
+            console.log(`您提供了${process.env.zl_ddnc.split("@").length}个账号的农场助力码\n`);
         }else {
             console.log(`由于你未提供shareCode,将采纳本脚本自带的助力码\n请先运行获取助力码脚本[jd_getCode.js]`)
             newShareCodes=shareCode.split('@');
@@ -1341,19 +1342,21 @@ function requireConfig() {
         }
         console.log(`共${cookiesArr.length}个京东账号\n`)
         $.shareCodesArr = [];
-        if ($.isNode()) {
-            Object.keys(jdFruitShareCodes).forEach((item) => {
-                if (jdFruitShareCodes[item]) {
-                    $.shareCodesArr.push(jdFruitShareCodes[item])
+                if ($.isNode()) {
+                    if (jdFruitShareCodes){
+                        Object.keys(jdFruitShareCodes).forEach((item) => {
+                            if (jdFruitShareCodes[item]) {
+                                $.shareCodesArr.push(jdFruitShareCodes[item])
+                            }
+                        })
+                    }
+                } else {
+                    if ($.getdata('jd_fruit_inviter')) $.shareCodesArr = $.getdata('jd_fruit_inviter').split('\n').filter(item => !!item);
+                    console.log(`\nBoxJs设置的${$.name}好友邀请码:${$.getdata('jd_fruit_inviter') ? $.getdata('jd_fruit_inviter') : '暂无'}\n`);
                 }
-            })
-        } else {
-            if ($.getdata('jd_fruit_inviter')) $.shareCodesArr = $.getdata('jd_fruit_inviter').split('\n').filter(item => !!item);
-            console.log(`\nBoxJs设置的${$.name}好友邀请码:${$.getdata('jd_fruit_inviter') ? $.getdata('jd_fruit_inviter') : '暂无'}\n`);
-        }
         // console.log(`$.shareCodesArr::${JSON.stringify($.shareCodesArr)}`)
         // console.log(`jdFruitShareArr账号长度::${$.shareCodesArr.length}`)
-        console.log(`您提供了${process.env.zl_ddnc.split("@").length}个账号的农场助力码\n`);
+        //console.log(`您提供了${process.env.zl_ddnc.split("@").length}个账号的农场助力码\n`);
         resolve()
     })
 }
